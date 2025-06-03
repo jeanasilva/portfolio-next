@@ -20,8 +20,8 @@ import {
 
 import { useThemeContext } from "../contexts/ThemeContext";
 
-// Partículas flutuantes melhoradas
-const EnhancedFloatingParticles = () => {
+// Partículas flutuantes simplificadas
+const FloatingParticles = () => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const { mounted } = useThemeContext();
 
@@ -40,17 +40,11 @@ const EnhancedFloatingParticles = () => {
     if (!mounted || dimensions.width === 0 || dimensions.height === 0) {
       return [];
     }
-    return Array.from({ length: 12 }, (_, i) => {
-      const size = Math.random() * 60 + 20;
-      const hue = 200 + Math.random() * 80;
-      const saturation = Math.random() * 40 + 60;
-      const lightness = Math.random() * 30 + 50;
-      const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-
+    return Array.from({ length: 6 }, (_, i) => {
+      const size = Math.random() * 40 + 30;
       return {
         id: i,
         size,
-        color,
         x: Math.random() * dimensions.width,
         y: Math.random() * dimensions.height,
         delay: Math.random() * 5,
@@ -61,26 +55,25 @@ const EnhancedFloatingParticles = () => {
   if (!mounted) return null;
   
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full blur-xl"
+          className="absolute rounded-full bg-blue-400 blur-xl"
           style={{
-            background: `radial-gradient(circle, ${p.color}40, transparent)`,
             width: p.size,
             height: p.size,
             left: p.x,
             top: p.y,
+            opacity: 0.3,
           }}
           animate={{
             x: [0, 50, -30, 0],
             y: [0, -40, 30, 0],
-            opacity: [0.3, 0.7, 0.4, 0.3],
             scale: [1, 1.2, 0.8, 1],
           }}
           transition={{
-            duration: 20 + Math.random() * 10,
+            duration: 15 + Math.random() * 10,
             repeat: Infinity,
             delay: p.delay,
             ease: "easeInOut",
@@ -91,18 +84,18 @@ const EnhancedFloatingParticles = () => {
   );
 };
 
-// Grid de fundo animado
-const AnimatedGrid = () => (
-  <div className="absolute inset-0 opacity-20 dark:opacity-10">
+// Grid de fundo
+const BackgroundGrid = () => (
+  <div className="absolute inset-0 opacity-10">
     <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
           <path
-            d="M 60 0 L 0 0 0 60"
+            d="M 40 0 L 0 0 0 40"
             fill="none"
             stroke="currentColor"
             strokeWidth="1"
-            className="text-blue-300 dark:text-blue-700"
+            className="text-blue-500"
           />
         </pattern>
       </defs>
@@ -111,11 +104,11 @@ const AnimatedGrid = () => (
   </div>
 );
 
-// Efeito de digitação melhorado
-const EnhancedTypingText = ({ text }: { text: string }) => (
-  <div className="relative inline-flex items-center">
+// Efeito de digitação
+const TypingEffect = ({ text }: { text: string }) => (
+  <div className="flex items-center gap-2">
     <motion.span
-      className="font-geist-mono text-2xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent"
+      className="text-xl sm:text-2xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
@@ -123,15 +116,15 @@ const EnhancedTypingText = ({ text }: { text: string }) => (
       {text}
     </motion.span>
     <motion.span
-      className="ml-1 h-7 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500"
+      className="w-0.5 h-6 bg-blue-500"
       animate={{ opacity: [1, 0] }}
       transition={{ repeat: Infinity, duration: 0.8 }}
     />
   </div>
 );
 
-// Tech bubble melhorado
-const EnhancedTechBubble = ({
+// Card de tecnologia com ícones corrigidos
+const TechCard = ({
   icon,
   name,
   index,
@@ -143,70 +136,36 @@ const EnhancedTechBubble = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
-  const techColors: Record<string, string> = {
-    React: "from-blue-400 to-cyan-400",
-    "Next.js": "from-gray-600 to-gray-800 dark:from-gray-300 dark:to-gray-100",
-    TypeScript: "from-blue-600 to-blue-800",
-    Tailwind: "from-teal-400 to-cyan-500",
-    "Node.js": "from-green-500 to-green-700",
-    GraphQL: "from-pink-500 to-rose-600",
-    PostgreSQL: "from-indigo-500 to-blue-600",
-    Docker: "from-blue-600 to-blue-800",
-    Kubernetes: "from-blue-400 to-indigo-600",
-    AWS: "from-orange-400 to-orange-600",
-    Redis: "from-red-500 to-red-700",
-    TensorFlow: "from-orange-500 to-yellow-600",
-  };
-
-  const gradient = techColors[name] || "from-gray-400 to-gray-600";
-
   return (
     <motion.div
       ref={ref}
-      className="tilt-card group relative overflow-hidden"
-      initial={{ opacity: 0, y: 50, rotateX: -15 }}
-      animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+      className="tilt-card group"
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ 
         delay: index * 0.1, 
-        duration: 0.6,
-        type: "spring",
-        stiffness: 100
+        duration: 0.5,
+        ease: "easeOut"
       }}
-      whileHover={{ 
-        y: -10, 
-        scale: 1.05,
-        rotateX: 5,
-        rotateY: 5
-      }}
+      whileHover={{ y: -8, scale: 1.05 }}
     >
-      <div className="relative p-6 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-100/30 dark:border-gray-700/30 shadow-xl">
-        {/* Glow effect */}
-        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300`} />
-        
+      <div className="relative p-4 sm:p-6 rounded-2xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-300">
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center gap-3">
-          <div className={`text-4xl bg-gradient-to-br ${gradient} bg-clip-text text-transparent`}>
+          <div className="text-3xl sm:text-4xl text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300">
             {icon}
           </div>
-          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 text-center">
             {name}
           </span>
         </div>
-
-        {/* Shine effect */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 group-hover:opacity-100"
-          initial={{ x: "-100%" }}
-          whileHover={{ x: "200%" }}
-          transition={{ duration: 0.6 }}
-        />
       </div>
     </motion.div>
   );
 };
 
-// Stats counter component
-const StatsCounter = ({ end, label }: { end: number; label: string }) => {
+// Contador de estatísticas
+const StatCard = ({ end, label }: { end: number; label: string }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -214,7 +173,7 @@ const StatsCounter = ({ end, label }: { end: number; label: string }) => {
   useEffect(() => {
     if (isInView) {
       let start = 0;
-      const increment = end / 50;
+      const increment = end / 30;
       const timer = setInterval(() => {
         start += increment;
         setCount(Math.floor(start));
@@ -222,7 +181,7 @@ const StatsCounter = ({ end, label }: { end: number; label: string }) => {
           setCount(end);
           clearInterval(timer);
         }
-      }, 30);
+      }, 50);
       return () => clearInterval(timer);
     }
   }, [end, isInView]);
@@ -230,13 +189,14 @@ const StatsCounter = ({ end, label }: { end: number; label: string }) => {
   return (
     <motion.div
       ref={ref}
-      className="text-center p-6 rounded-2xl bg-white/10 dark:bg-gray-800/10 backdrop-blur-xl border border-white/20 dark:border-gray-700/20"
-      whileHover={{ scale: 1.05, y: -5 }}
+      className="text-center p-4 sm:p-6 rounded-xl bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/30"
+      whileHover={{ scale: 1.05, y: -3 }}
+      transition={{ duration: 0.2 }}
     >
-      <div className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+      <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
         {count}+
       </div>
-      <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">{label}</div>
+      <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 font-medium">{label}</div>
     </motion.div>
   );
 };
@@ -245,7 +205,7 @@ export default function Hero() {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const { isDark, mounted } = useThemeContext();
+  const { mounted, isDark } = useThemeContext();
   const heroRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -253,7 +213,7 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
   
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const roles = [
@@ -274,7 +234,7 @@ export default function Hero() {
         100
       );
     } else if (!isDeleting && displayedText.length === currentRole.length) {
-      timeout = setTimeout(() => setIsDeleting(true), 1500);
+      timeout = setTimeout(() => setIsDeleting(true), 2000);
     } else if (isDeleting && displayedText.length > 0) {
       timeout = setTimeout(
         () => setDisplayedText(currentRole.substring(0, displayedText.length - 1)),
@@ -293,12 +253,11 @@ export default function Hero() {
     
     document.querySelectorAll<HTMLElement>(".tilt-card").forEach((el) => {
       VanillaTilt.init(el, {
-        max: 15,
+        max: 10,
         speed: 400,
         glare: true,
-        "max-glare": 0.3,
+        "max-glare": 0.2,
         scale: 1.02,
-        perspective: 1000,
       });
     });
   }, [mounted]);
@@ -318,110 +277,140 @@ export default function Hero() {
     { icon: <SiTensorflow />, name: "TensorFlow" },
   ];
 
-  // Loading state while mounting
+  // Loading state
   if (!mounted) {
     return (
-      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-900">
+      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500"></div>
         </div>
       </section>
     );
   }
 
+  // Determinar classes de fundo baseado no tema atual
+  const backgroundClasses = isDark 
+    ? "bg-gradient-to-br from-gray-900 via-gray-800 to-indigo-900" 
+    : "bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100";
+
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-900"
+      className={`relative min-h-screen overflow-hidden transition-all duration-500 ${backgroundClasses}`}
     >
       {/* Background Elements */}
-      <AnimatedGrid />
-      <EnhancedFloatingParticles />
+      <BackgroundGrid />
+      <FloatingParticles />
       
       <motion.div 
-        className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center"
+        className="relative z-10"
         style={{ y, opacity }}
       >
-        {/* Main Content Container */}
-        <div className="max-w-6xl w-full">
-          {/* Hero Content */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
-            {/* Left Side - Text Content */}
+        {/* Main Content - Ajustado o padding-top para não colar no header */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
+          
+          {/* Hero Section */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-20">
+            
+            {/* Left Content */}
             <motion.div
-              className="space-y-8 text-center lg:text-left"
+              className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              {/* Greeting */}
+              {/* Greeting Badge */}
               <motion.div
-                className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/20 dark:bg-gray-800/20 backdrop-blur-xl border border-white/30 dark:border-gray-700/30"
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm border ${
+                  isDark 
+                    ? "bg-gray-800/30 border-gray-700/50 text-gray-300" 
+                    : "bg-white/30 border-white/50 text-gray-700"
+                }`}
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                <span className="text-2xl">👋</span>
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                <span className="text-xl">👋</span>
+                <span className="text-sm font-medium">
                   Olá, eu sou
                 </span>
               </motion.div>
 
               {/* Name */}
               <motion.h1
-                className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight"
+                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
               >
-                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                <span className={`bg-gradient-to-r ${
+                  isDark 
+                    ? "from-blue-400 via-purple-400 to-indigo-400" 
+                    : "from-blue-600 via-purple-600 to-indigo-600"
+                } bg-clip-text text-transparent`}>
                   Jean A.
                 </span>
                 <br />
-                <span className="bg-gradient-to-r from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400 bg-clip-text text-transparent">
+                <span className={`bg-gradient-to-r ${
+                  isDark 
+                    ? "from-indigo-400 to-blue-400" 
+                    : "from-indigo-600 to-blue-600"
+                } bg-clip-text text-transparent`}>
                   Silva
                 </span>
               </motion.h1>
 
-              {/* Typing Animation */}
+              {/* Typing Role */}
               <motion.div
-                className="h-16 flex items-center justify-center lg:justify-start"
+                className="flex items-center justify-center lg:justify-start min-h-[60px]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
-                <div className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/30 dark:border-gray-700/30">
-                  <FiCode className="text-blue-500 dark:text-blue-400 text-xl" />
-                  <EnhancedTypingText text={displayedText} />
+                <div className={`flex items-center gap-3 px-4 sm:px-6 py-3 rounded-xl backdrop-blur-sm border ${
+                  isDark 
+                    ? "bg-gray-800/40 border-gray-700/50" 
+                    : "bg-white/40 border-white/50"
+                }`}>
+                  <FiCode className={`text-lg sm:text-xl flex-shrink-0 ${
+                    isDark ? "text-blue-400" : "text-blue-500"
+                  }`} />
+                  <TypingEffect text={displayedText} />
                 </div>
               </motion.div>
 
               {/* Description */}
               <motion.p
-                className="text-lg lg:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg mx-auto lg:mx-0"
+                className={`text-base sm:text-lg lg:text-xl leading-relaxed max-w-lg mx-auto lg:mx-0 ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
               >
                 Desenvolvedor Full-Stack especializado em criar{" "}
-                <span className="font-semibold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+                <span className={`font-semibold bg-gradient-to-r ${
+                  isDark 
+                    ? "from-blue-400 to-purple-400" 
+                    : "from-blue-600 to-purple-600"
+                } bg-clip-text text-transparent`}>
                   soluções digitais inovadoras
                 </span>{" "}
-                com integração de IA e tecnologias modernas.
+                com tecnologias modernas e integração de IA.
               </motion.p>
 
-              {/* Action Buttons */}
+              {/* CTA Buttons */}
               <motion.div
-                className="flex flex-wrap gap-4 justify-center lg:justify-start"
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
               >
                 <motion.a
                   href="#projects"
-                  className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl font-semibold flex items-center gap-3 overflow-hidden shadow-xl"
+                  className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 shadow-lg overflow-hidden"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  aria-label="Ver projetos"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     <FiZap className="text-lg" />
@@ -438,10 +427,13 @@ export default function Hero() {
 
                 <motion.a
                   href="#contact"
-                  className="px-8 py-4 border-2 border-blue-500/30 dark:border-blue-400/30 text-blue-600 dark:text-blue-400 rounded-2xl font-semibold flex items-center gap-3 backdrop-blur-xl bg-white/10 dark:bg-gray-800/10 hover:bg-white/20 dark:hover:bg-gray-700/20 transition-all duration-300"
+                  className={`px-6 sm:px-8 py-3 sm:py-4 border-2 rounded-xl font-semibold flex items-center justify-center gap-2 backdrop-blur-sm transition-all duration-300 ${
+                    isDark 
+                      ? "border-blue-400/50 text-blue-400 bg-gray-800/20 hover:bg-gray-700/30" 
+                      : "border-blue-500/50 text-blue-600 bg-white/20 hover:bg-white/30"
+                  }`}
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  aria-label="Entrar em contato"
                 >
                   Contato
                   <FiExternalLink className="text-sm" />
@@ -449,81 +441,93 @@ export default function Hero() {
               </motion.div>
             </motion.div>
 
-            {/* Right Side - Avatar & Stats */}
+            {/* Right Content - Avatar */}
             <motion.div
-              className="space-y-8"
+              className="space-y-6 order-1 lg:order-2"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              {/* Avatar */}
+              {/* Avatar Container */}
               <motion.div
-                className="relative mx-auto w-80 h-80 lg:w-96 lg:h-96"
-                animate={{ y: [0, -10, 0] }}
+                className="relative mx-auto w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96"
+                animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               >
-                {/* Glow background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/30 to-purple-600/30 rounded-full blur-3xl animate-pulse" />
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-2xl animate-pulse" />
                 
-                {/* Main avatar container */}
-                <div className="relative w-full h-full rounded-full p-2 bg-gradient-to-br from-blue-400 to-purple-600 shadow-2xl">
-                  <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-800 p-3">
-                    <Image
-                      src="/foto_logo.jpg"
-                      alt="Jean A. Silva"
-                      fill
-                      className="rounded-full object-cover"
-                      priority
-                    />
+                {/* Avatar Image */}
+                <div className="relative w-full h-full rounded-full p-1 bg-gradient-to-br from-blue-400 to-purple-600 shadow-2xl">
+                  <div className={`w-full h-full rounded-full overflow-hidden p-2 ${
+                    isDark ? "bg-gray-800" : "bg-white"
+                  }`}>
+                    <div className="relative w-full h-full">
+                      <Image
+                        src="/foto_logo.jpg"
+                        alt="Jean A. Silva"
+                        fill
+                        className="rounded-full object-cover"
+                        priority
+                      />
+                    </div>
                   </div>
                 </div>
 
-                {/* Floating elements */}
+                {/* Floating Icons */}
                 <motion.div
-                  className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full flex items-center justify-center text-white shadow-lg"
-                  animate={{ rotate: 360, scale: [1, 1.2, 1] }}
+                  className="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full flex items-center justify-center text-white shadow-lg"
+                  animate={{ rotate: 360, scale: [1, 1.1, 1] }}
                   transition={{ duration: 4, repeat: Infinity }}
                 >
-                  <FiCode className="text-xl" />
+                  <FiCode className="text-lg" />
                 </motion.div>
 
                 <motion.div
-                  className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white shadow-lg"
-                  animate={{ rotate: -360, scale: [1.2, 1, 1.2] }}
+                  className="absolute -bottom-2 -left-2 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white shadow-lg"
+                  animate={{ rotate: -360, scale: [1.1, 1, 1.1] }}
                   transition={{ duration: 5, repeat: Infinity }}
                 >
-                  <FiZap className="text-2xl" />
+                  <FiZap className="text-xl" />
                 </motion.div>
               </motion.div>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-4">
-                <StatsCounter end={50} label="Projetos" />
-                <StatsCounter end={5} label="Anos Exp." />
-                <StatsCounter end={100} label="Clientes" />
+              <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-sm mx-auto">
+                <StatCard end={50} label="Projetos" />
+                <StatCard end={5} label="Anos" />
+                <StatCard end={100} label="Clientes" />
               </div>
             </motion.div>
           </div>
 
-          {/* Tech Stack */}
+          {/* Tech Stack Section */}
           <motion.div
             className="space-y-8"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
-            <div className="text-center">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-200 dark:to-gray-400 bg-clip-text text-transparent mb-4">
+            {/* Section Header */}
+            <div className="text-center space-y-4">
+              <h2 className={`text-2xl sm:text-3xl font-bold bg-gradient-to-r ${
+                isDark 
+                  ? "from-gray-200 to-gray-400" 
+                  : "from-gray-800 to-gray-600"
+              } bg-clip-text text-transparent`}>
                 Stack de Tecnologias
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Ferramentas e tecnologias que utilizo para criar soluções robustas e escaláveis
+              </h2>
+              <p className={`text-sm sm:text-base max-w-2xl mx-auto ${
+                isDark ? "text-gray-400" : "text-gray-600"
+              }`}>
+                Ferramentas e tecnologias que domino para criar soluções robustas e escaláveis
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
+            {/* Tech Grid */}
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-6 max-w-4xl mx-auto">
               {techStack.map((tech, index) => (
-                <EnhancedTechBubble
+                <TechCard
                   key={tech.name}
                   icon={tech.icon}
                   name={tech.name}
@@ -537,15 +541,17 @@ export default function Hero() {
         {/* Scroll Indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, -10, 0] }}
+          animate={{ y: [0, -8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <div className="flex flex-col items-center gap-2 text-gray-400 dark:text-gray-500">
+          <div className={`flex flex-col items-center gap-2 ${
+            isDark ? "text-gray-400" : "text-gray-500"
+          }`}>
             <span className="text-xs font-medium">Scroll</span>
-            <div className="w-6 h-10 border-2 border-current rounded-full flex justify-center">
+            <div className="w-5 h-8 border-2 border-current rounded-full flex justify-center">
               <motion.div
-                className="w-1 h-2 bg-current rounded-full mt-2"
-                animate={{ y: [0, 12, 0] }}
+                className="w-1 h-2 bg-current rounded-full mt-1"
+                animate={{ y: [0, 8, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               />
             </div>

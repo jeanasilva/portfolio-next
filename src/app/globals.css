@@ -13,8 +13,11 @@
   --color-accent-dark: #3b82f6;
 }
 
-* {
-  transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease;
+/* Transições globais suaves */
+*,
+*::before,
+*::after {
+  transition: background-color 400ms ease, border-color 400ms ease, color 400ms ease, opacity 400ms ease;
 }
 
 html {
@@ -26,7 +29,6 @@ body {
   color: var(--color-dark);
   font-family: var(--font-geist-sans);
   margin: 0;
-  transition: background-color 300ms ease, color 300ms ease;
 }
 
 .dark body {
@@ -34,38 +36,67 @@ body {
   color: var(--color-light);
 }
 
+/* Garantir transições suaves para seções com gradientes */
+section {
+  transition: background 400ms ease, color 400ms ease;
+}
+
+/* Hero background transitions */
+.bg-gradient-to-br {
+  transition: all 400ms ease;
+}
+
 /* Garantir que inputs e textareas herdem a cor correta */
 input, textarea, select {
   color: inherit;
   background-color: inherit;
-}
-
-/* Suavizar transições para elementos de tema */
-.bg-white, .dark .bg-gray-900,
-.text-gray-900, .dark .text-white,
-.bg-gradient-to-br {
   transition: all 300ms ease;
 }
 
-/* Evitar flash de conteúdo sem estilo */
-html.loading {
-  visibility: hidden;
-}
-
-html:not(.loading) {
-  visibility: visible;
-}
-
-/* Melhorar a renderização de gradientes */
-.bg-gradient-to-r,
-.bg-gradient-to-br,
-.bg-gradient-to-b {
-  background-attachment: fixed;
-}
-
-/* Suavizar mudanças de backdrop-blur */
+/* Transições para elementos de tema específicos */
+.bg-white, 
+.dark\:bg-gray-900,
+.text-gray-900, 
+.dark\:text-white,
 .backdrop-blur-sm,
 .backdrop-blur-md,
 .backdrop-blur-xl {
-  transition: backdrop-filter 300ms ease;
+  transition: all 400ms ease;
+}
+
+/* Suavizar bordas e sombras */
+.border,
+.shadow-lg,
+.shadow-xl {
+  transition: all 300ms ease;
+}
+
+/* Garantir que as cores de texto mudem suavemente */
+.text-gray-600,
+.text-gray-700,
+.text-gray-800,
+.dark\:text-gray-300,
+.dark\:text-gray-200,
+.dark\:text-gray-100 {
+  transition: color 400ms ease;
+}
+
+/* Garantir que gradientes de fundo respondam ao tema */
+.from-slate-50,
+.via-blue-50,
+.to-indigo-100,
+.dark\:from-gray-900,
+.dark\:via-gray-800,
+.dark\:to-indigo-900 {
+  transition: all 400ms ease;
+}
+
+/* Evitar flash inicial */
+html.loading * {
+  transition: none !important;
+}
+
+/* Suavizar animações do VanillaTilt */
+.tilt-card {
+  transform-style: preserve-3d;
 }
