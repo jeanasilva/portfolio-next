@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import VanillaTilt from "vanilla-tilt";
-import { FiExternalLink, FiMoon, FiSun, FiCode, FiZap } from "react-icons/fi";
+import { FiExternalLink, FiCode, FiZap } from "react-icons/fi";
 import { FaReact, FaNodeJs, FaAws } from "react-icons/fa";
 import {
   SiNextdotjs,
@@ -59,6 +59,7 @@ const EnhancedFloatingParticles = () => {
   }, [dimensions, mounted]);
 
   if (!mounted) return null;
+  
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {particles.map((p) => (
@@ -178,7 +179,7 @@ const EnhancedTechBubble = ({
         rotateY: 5
       }}
     >
-      <div className="relative p-6 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-white/20 dark:border-gray-700/20 shadow-xl">
+      <div className="relative p-6 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-100/30 dark:border-gray-700/30 shadow-xl">
         {/* Glow effect */}
         <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300`} />
         
@@ -244,7 +245,7 @@ export default function Hero() {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const { isDark, toggle, mounted } = useThemeContext();
+  const { isDark, mounted } = useThemeContext();
   const heroRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -317,10 +318,10 @@ export default function Hero() {
     { icon: <SiTensorflow />, name: "TensorFlow" },
   ];
 
-  // Não renderizar nada até estar montado (evita hidration mismatch)
+  // Loading state while mounting
   if (!mounted) {
     return (
-      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-900">
         <div className="flex items-center justify-center min-h-screen">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
         </div>

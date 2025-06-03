@@ -26,38 +26,55 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Marcar como montado
     setMounted(true);
     
-    // Verificar se já existe uma preferência salva
-    const saved = localStorage.getItem("theme");
-    
-    // Se não há preferência salva, usar preferência do sistema
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
-    const shouldBeDark = saved === "dark" || (!saved && systemPrefersDark);
-    
-    setIsDark(shouldBeDark);
-    
-    // Aplicar classe no documentElement (html) em vez do body
-    if (shouldBeDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    try {
+      // Verificar se já existe uma preferência salva
+      const saved = localStorage.getItem("theme");
+      
+      // Se não há preferência salva, usar preferência do sistema
+      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      
+      const shouldBeDark = saved === "dark" || (!saved && systemPrefersDark);
+      
+      setIsDark(shouldBeDark);
+      
+      // Aplicar classe no documentElement imediatamente
+      if (shouldBeDark) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    } catch (error) {
+      console.warn("Erro ao acessar localStorage:", error);
+      // Fallback para preferência do sistema
+      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setIsDark(systemPrefersDark);
+      if (systemPrefersDark) {
+        document.documentElement.classList.add("dark");
+      }
     }
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
     
-    // Aplicar mudanças no DOM
+    // Aplicar mudanças no DOM sempre que isDark mudar
     if (isDark) {
       document.documentElement.classList.add("dark");
+      document.body.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
+      document.body.classList.remove("dark");
     }
     
     // Salvar preferência
-    localStorage.setItem("theme", isDark ? "dark" : "light");
+    try {
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    } catch (error) {
+      console.warn("Erro ao salvar tema no localStorage:", error);
+    }
   }, [isDark, mounted]);
 
   const toggle = () => {

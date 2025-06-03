@@ -6,16 +6,12 @@ import { FiSun, FiMoon, FiCode, FiZap, FiUser } from "react-icons/fi";
 import { useThemeContext } from "../contexts/ThemeContext";
 
 export default function Header() {
-  const { isDark, toggle } = useThemeContext();
+  const { isDark, toggle, mounted } = useThemeContext();
   const [menu, setMenu] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const { scrollY } = useScroll();
-  
   const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
 
   useEffect(() => {
-    setMounted(true);
-    
     const updateScrolled = () => {
       setScrolled(window.scrollY > 50);
     };
@@ -91,6 +87,22 @@ export default function Header() {
       }
     })
   };
+
+  // Não renderizar enquanto não estiver montado
+  if (!mounted) {
+    return (
+      <nav className="fixed inset-x-0 top-0 z-50 backdrop-blur-md border-b border-white/10 dark:border-gray-800/20">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="w-32 h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+          <div className="hidden md:flex gap-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="w-16 h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+            ))}
+          </div>
+        </div>
+      </nav>
+    );
+  }
 
   return (
     <>
@@ -182,49 +194,47 @@ export default function Header() {
             ))}
 
             {/* Theme Toggle Enhanced */}
-            {mounted && (
-              <motion.button
-                onClick={toggle}
-                className="ml-4 p-3 rounded-xl bg-white/20 dark:bg-gray-800/20 hover:bg-white/30 dark:hover:bg-gray-700/30 border border-white/30 dark:border-gray-700/30 backdrop-blur-sm transition-all duration-300 group"
-                whileHover={{ 
-                  scale: 1.1, 
-                  rotate: 180,
-                  backgroundColor: isDark ? "rgba(55, 65, 81, 0.4)" : "rgba(255, 255, 255, 0.4)"
-                }}
-                whileTap={{ scale: 0.9 }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 }}
-                aria-label="Alternar tema"
-              >
-                <AnimatePresence mode="wait">
-                  {isDark ? (
-                    <motion.div
-                      key="sun"
-                      initial={{ rotate: -180, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 180, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <FiSun className="text-yellow-400 text-lg" />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="moon"
-                      initial={{ rotate: -180, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 180, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <FiMoon className="text-blue-500 text-lg" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+            <motion.button
+              onClick={toggle}
+              className="ml-4 p-3 rounded-xl bg-white/20 dark:bg-gray-800/20 hover:bg-white/30 dark:hover:bg-gray-700/30 border border-white/30 dark:border-gray-700/30 backdrop-blur-sm transition-all duration-300 group"
+              whileHover={{ 
+                scale: 1.1, 
+                rotate: 180,
+                backgroundColor: isDark ? "rgba(55, 65, 81, 0.4)" : "rgba(255, 255, 255, 0.4)"
+              }}
+              whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5 }}
+              aria-label="Alternar tema"
+            >
+              <AnimatePresence mode="wait">
+                {isDark ? (
+                  <motion.div
+                    key="sun"
+                    initial={{ rotate: -180, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 180, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <FiSun className="text-yellow-400 text-lg" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="moon"
+                    initial={{ rotate: -180, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 180, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <FiMoon className="text-blue-500 text-lg" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-                {/* Glow effect */}
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm -z-10" />
-              </motion.button>
-            )}
+              {/* Glow effect */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm -z-10" />
+            </motion.button>
           </div>
 
           {/* Mobile Hamburger Enhanced */}
@@ -297,31 +307,29 @@ export default function Header() {
                   </motion.a>
                 ))}
 
-                {mounted && (
-                  <motion.button
-                    onClick={() => {
-                      toggle();
-                      setMenu(false);
-                    }}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all duration-300"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 }}
-                    whileHover={{ x: 5 }}
-                  >
-                    <div className="p-2 rounded-lg bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 transition-colors duration-300">
-                      {isDark ? <FiSun className="text-sm" /> : <FiMoon className="text-sm" />}
-                    </div>
-                    <div className="flex flex-col items-start">
-                      <span className="font-medium">
-                        {isDark ? "Modo Claro" : "Modo Escuro"}
-                      </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
-                        Alterar aparência
-                      </span>
-                    </div>
-                  </motion.button>
-                )}
+                <motion.button
+                  onClick={() => {
+                    toggle();
+                    setMenu(false);
+                  }}
+                  className="w-full flex items-center gap-3 p-3 rounded-xl text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all duration-300"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <div className="p-2 rounded-lg bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 transition-colors duration-300">
+                    {isDark ? <FiSun className="text-sm" /> : <FiMoon className="text-sm" />}
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <span className="font-medium">
+                      {isDark ? "Modo Claro" : "Modo Escuro"}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      Alterar aparência
+                    </span>
+                  </div>
+                </motion.button>
               </div>
             </motion.div>
           )}
