@@ -1,0 +1,30 @@
+/* src/app/globals.css */
+@import "tailwindcss";
+
+:root {
+  --font-geist-sans: "GeistSans", sans-serif;
+  --font-geist-mono: "GeistMono", monospace;
+  --color-light: #f8fafc;
+  --color-light-100: #f1f5f9;
+  --color-light-200: #e5e7eb;
+  --color-dark: #111827;
+  --color-dark-100: #1f2a44;
+  --color-accent: #60a5fa;
+  --color-accent-dark: #3b82f6;
+}
+
+body {
+  background: var(--color-light);
+  color: var(--color-dark);
+  font-family: var(--font-geist-sans);
+  margin: 0;
+}
+
+.dark body {
+  background: var(--color-dark);
+  color: var(--color-light);
+}
+
+input, textarea {
+  color: inherit;
+}
