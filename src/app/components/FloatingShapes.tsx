@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useIsMounted } from "../hooks/useIsMounted";
+import { useThemeContext } from "../contexts/ThemeContext";
 
 type Palette =
   | "blue"
@@ -19,7 +20,7 @@ interface Props {
   z?: number;          // z-index, default 0
 }
 
-const palettes: Record<Palette, string[]> = {
+const lightPalettes: Record<Palette, string[]> = {
   blue:   ["from-blue-300 to-blue-200"],
   purple: ["from-purple-200 to-indigo-200"],
   teal:   ["from-cyan-200 to-teal-200"],
@@ -32,6 +33,19 @@ const palettes: Record<Palette, string[]> = {
   ],
 };
 
+const darkPalettes: Record<Palette, string[]> = {
+  blue: ["from-blue-700 to-indigo-500"],
+  purple: ["from-purple-700 to-pink-500"],
+  teal: ["from-cyan-600 to-teal-600"],
+  pink: ["from-pink-700 to-purple-600"],
+  mixed: [
+    "from-indigo-600 to-purple-600",
+    "from-blue-700 to-indigo-500",
+    "from-purple-700 to-pink-500",
+    "from-cyan-600 to-teal-600",
+  ],
+};
+
 export function FloatingShapes({
   amount = 4,
   size = [50, 130],
@@ -40,6 +54,7 @@ export function FloatingShapes({
   z = 0,
 }: Props) {
   const isMounted = useIsMounted();
+  const { isDark } = useThemeContext();
   const [viewport, setViewport] = useState({ w: 0, h: 0 });
 
   useEffect(() => {
@@ -52,7 +67,7 @@ export function FloatingShapes({
 
   const shapes = useMemo(() => {
     if (!isMounted || viewport.w === 0) return [];
-    const colors = palettes[palette];
+    const colors = (isDark ? darkPalettes : lightPalettes)[palette];
     return Array.from({ length: amount }, (_, i) => {
       const rnd = () => Math.random();
       const s = rnd() * (size[1] - size[0]) + size[0];
@@ -74,7 +89,7 @@ export function FloatingShapes({
         scale2: rnd() * 0.3 + 0.2,
       };
     });
-  }, [isMounted, viewport, amount, size, palette]);
+  }, [isMounted, viewport, amount, size, palette, isDark]);
 
   if (!isMounted) return null;
 
