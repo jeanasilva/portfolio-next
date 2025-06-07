@@ -1,4 +1,3 @@
-// src/app/components/Contact.tsx
 
 "use client";
 
@@ -27,11 +26,11 @@ export default function Contact() {
       id="contact"
       className="relative py-24 px-4 bg-gradient-to-b from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 overflow-hidden"
     >
-      {/* Elementos flutuantes de fundo (após montagem) */}
+      
       <FloatingShapes palette="mixed" z={0} />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Cabeçalho */}
+        
         <div className="text-center mb-16">
           <motion.h2
             className="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent tracking-wide"
@@ -57,7 +56,7 @@ export default function Contact() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Card: Informações de Contato */}
+          
           <motion.div
             className="bg-white/90 dark:bg-gray-800/80 backdrop-blur-md p-8 rounded-3xl shadow-lg border border-gray-100/30 dark:border-gray-700/30"
             initial={{ opacity: 0, x: -20 }}
@@ -69,7 +68,7 @@ export default function Contact() {
               Informações de Contato
             </h3>
             <div className="space-y-6">
-              {/* E-mail */}
+              
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-full text-blue-500 dark:text-blue-300 flex-shrink-0">
                   <FaEnvelope className="text-xl" />
@@ -87,7 +86,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* LinkedIn */}
+              
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-full text-blue-600 dark:text-blue-400 flex-shrink-0">
                   <FaLinkedin className="text-xl" />
@@ -107,7 +106,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* GitHub */}
+              
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-gray-200 dark:bg-gray-700/20 rounded-full text-gray-800 dark:text-gray-200 flex-shrink-0">
                   <FaGithub className="text-xl" />
@@ -129,7 +128,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Formulário */}
+          
           <motion.form
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-6 bg-white/90 dark:bg-gray-800/80 backdrop-blur-md p-8 rounded-3xl shadow-lg border border-gray-100/30 dark:border-gray-700/30"

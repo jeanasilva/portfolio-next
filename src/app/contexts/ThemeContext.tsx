@@ -1,4 +1,3 @@
-// src/app/contexts/ThemeContext.tsx
 "use client";
 
 import React, {
@@ -26,21 +25,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Marcar como montado
     setMounted(true);
     
     try {
-      // Verificar se já existe uma preferência salva
       const saved = localStorage.getItem("theme");
       
-      // Se não há preferência salva, usar preferência do sistema
       const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       
       const shouldBeDark = saved === "dark" || (!saved && systemPrefersDark);
       
       setIsDark(shouldBeDark);
       
-      // Aplicar classe no documentElement imediatamente
       if (shouldBeDark) {
         document.documentElement.classList.add("dark");
       } else {
@@ -48,7 +43,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.warn("Erro ao acessar localStorage:", error);
-      // Fallback para preferência do sistema
       const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       setIsDark(systemPrefersDark);
       if (systemPrefersDark) {
@@ -60,7 +54,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!mounted) return;
     
-    // Aplicar mudanças no DOM sempre que isDark mudar
     if (isDark) {
       document.documentElement.classList.add("dark");
       document.body.classList.add("dark");
@@ -69,7 +62,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       document.body.classList.remove("dark");
     }
     
-    // Salvar preferência
     try {
       localStorage.setItem("theme", isDark ? "dark" : "light");
     } catch (error) {
@@ -90,16 +82,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
 export const useThemeContext = () => useContext(ThemeContext);
 
-// Hook personalizado para usar no lugar do useThemeSwitcher
 export const useThemeSwitcher = (): [boolean, (value: boolean | ((prev: boolean) => boolean)) => void] => {
   const { isDark, toggle } = useThemeContext();
   
   const setIsDark = (value: boolean | ((prev: boolean) => boolean)) => {
     if (typeof value === 'function') {
-      // Se for uma função, executar o toggle
       toggle();
     } else {
-      // Se for um valor booleano direto
       if (value !== isDark) {
         toggle();
       }

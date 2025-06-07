@@ -1,4 +1,3 @@
-// src/app/components/Skills.tsx
 
 "use client";
 
@@ -8,7 +7,6 @@ import VanillaTilt from "vanilla-tilt";
 import { FaCode, FaServer, FaCloud } from "react-icons/fa";
 import { useThemeContext } from "../contexts/ThemeContext";
 
-// Gradiente de fundo com grid, semelhante ao Hero
 const BackgroundGrid = () => (
   <div className="absolute inset-0 opacity-10">
     <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +26,6 @@ const BackgroundGrid = () => (
   </div>
 );
 
-// Elementos flutuantes semelhantes ao Hero (partículas/blobs com blur)
 const FloatingElements = () => {
   const { mounted, isDark } = useThemeContext();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -53,7 +50,6 @@ const FloatingElements = () => {
       const startY = Math.random() * dimensions.height;
       const endX = Math.random() * dimensions.width;
       const endY = Math.random() * dimensions.height;
-      // Cores levemente ajustadas para combinar com a paleta do Hero
       const colorSet = isDark
         ? ["from-indigo-600 to-purple-600", "from-blue-700 to-indigo-500", "from-purple-700 to-pink-500", "from-cyan-600 to-teal-600"]
         : ["from-blue-300 to-cyan-300", "from-purple-300 to-pink-300", "from-cyan-200 to-teal-200", "from-pink-200 to-purple-200"];
@@ -154,11 +150,11 @@ const SkillCard = ({
       transition={{ duration: 0.5 }}
       style={{ minHeight: 300 }}
     >
-      {/* Bolha de gradiente de fundo */}
+      
       <div
         className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br ${color} opacity-10`}
       />
-      {/* Ícone do skill */}
+      
       <div
         className={`mb-4 w-12 h-12 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center text-white shadow-md`}
       >
@@ -194,7 +190,6 @@ const SkillCard = ({
 export default function Skills() {
   const { mounted, isDark } = useThemeContext();
 
-  // Inicializa o efeito tilt apenas depois do componente montar
   useEffect(() => {
     if (!mounted) return;
     document.querySelectorAll<HTMLElement>(".tilt-card").forEach((el) => {
@@ -208,7 +203,6 @@ export default function Skills() {
     });
   }, [mounted]);
 
-  // Classes de fundo dinâmicas igual ao Hero
   const backgroundClasses = isDark
     ? "bg-gradient-to-b from-gray-900 via-gray-800 to-indigo-900"
     : "bg-gradient-to-b from-slate-50 via-blue-50 to-indigo-100";
@@ -231,7 +225,7 @@ export default function Skills() {
       id="skills"
       className={`relative py-24 px-4 overflow-hidden transition-all duration-500 ${backgroundClasses}`}
     >
-      {/* Background Grid e Elementos Flutuantes */}
+      
       <BackgroundGrid />
       <FloatingElements />
 

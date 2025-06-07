@@ -10,7 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        {/* Script para aplicar tema antes do carregamento do JavaScript */}
+        
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -25,7 +25,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   document.documentElement.classList.remove('dark');
                 }
               } catch (e) {
-                // Em caso de erro, usar preferência do sistema
                 if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
                   document.documentElement.classList.add('dark');
                 }
