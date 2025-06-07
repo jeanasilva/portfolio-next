@@ -1,17 +1,15 @@
 "use client";
 
 import React from "react";
-import { useTheme } from "next-themes";
+import { useThemeContext } from "../contexts/ThemeContext";
 import { FiMoon, FiSun } from "react-icons/fi";
 
 export function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
-
-  const isDark = resolvedTheme === "dark";
+  const { isDark, toggle } = useThemeContext();
 
   return (
     <button
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={toggle}
       className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 transition-colors hover:bg-gray-200 dark:hover:bg-gray-600"
       aria-label="Alternar tema"
     >
