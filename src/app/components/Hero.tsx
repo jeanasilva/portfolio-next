@@ -20,7 +20,6 @@ import {
 
 import { useThemeContext } from "../contexts/ThemeContext";
 
-// Partículas flutuantes simplificadas
 const FloatingParticles = () => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const { mounted } = useThemeContext();
@@ -84,7 +83,6 @@ const FloatingParticles = () => {
   );
 };
 
-// Grid de fundo
 const BackgroundGrid = () => (
   <div className="absolute inset-0 opacity-10">
     <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +102,6 @@ const BackgroundGrid = () => (
   </div>
 );
 
-// Efeito de digitação
 const TypingEffect = ({ text }: { text: string }) => (
   <div className="flex items-center gap-2">
     <motion.span
@@ -123,7 +120,6 @@ const TypingEffect = ({ text }: { text: string }) => (
   </div>
 );
 
-// Card de tecnologia com ícones
 const TechCard = ({
   icon,
   name,
@@ -163,7 +159,6 @@ const TechCard = ({
   );
 };
 
-// Contador de estatísticas
 const StatCard = ({ end, label }: { end: number; label: string }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -276,7 +271,6 @@ export default function Hero() {
     { icon: <SiTensorflow />, name: "TensorFlow" },
   ];
 
-  // Loading state
   if (!mounted) {
     return (
       <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
@@ -287,9 +281,12 @@ export default function Hero() {
     );
   }
 
-  // Determinar classes de fundo baseado no tema atual
   const backgroundClasses = isDark
     ? "bg-gradient-to-br from-gray-900 via-gray-800 to-indigo-900"
+    : "bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100";
+
+  const stackBackground = isDark
+    ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700"
     : "bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100";
 
   return (
@@ -297,23 +294,23 @@ export default function Hero() {
       ref={heroRef}
       className={`relative min-h-screen overflow-hidden transition-all duration-500 ${backgroundClasses}`}
     >
-      {/* Background Elements */}
+      
       <BackgroundGrid />
       <FloatingParticles />
 
-      {/* === Aqui fechamos o motion.div logo após os conteúdos que queremos “fadar” === */}
+      
       <motion.div className="relative z-10" style={{ y, opacity }}>
-        {/* Main Content */}
+        
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-20">
-            {/* Left Content */}
+            
             <motion.div
               className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              {/* Greeting Badge */}
+              
               <motion.div
                 className={`inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm border ${
                   isDark
@@ -328,7 +325,7 @@ export default function Hero() {
                 <span className="text-sm font-medium">Olá, eu sou</span>
               </motion.div>
 
-              {/* Name */}
+              
               <motion.h1
                 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
                 initial={{ opacity: 0, y: 30 }}
@@ -354,7 +351,7 @@ export default function Hero() {
                 </span>
               </motion.h1>
 
-              {/* Typing Role */}
+              
               <motion.div
                 className="flex items-center justify-center lg:justify-start min-h-[60px]"
                 initial={{ opacity: 0 }}
@@ -375,7 +372,7 @@ export default function Hero() {
                 </div>
               </motion.div>
 
-              {/* Description */}
+              
               <motion.p
                 className={`text-base sm:text-lg lg:text-xl leading-relaxed max-w-lg mx-auto lg:mx-0 ${
                   isDark ? "text-gray-300" : "text-gray-700"
@@ -395,7 +392,7 @@ export default function Hero() {
                 com tecnologias modernas e integração de IA.
               </motion.p>
 
-              {/* CTA Buttons */}
+              
               <motion.div
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
                 initial={{ opacity: 0, y: 20 }}
@@ -436,23 +433,23 @@ export default function Hero() {
               </motion.div>
             </motion.div>
 
-            {/* Right Content – Avatar e Stats */}
+            
             <motion.div
               className="space-y-6 order-1 lg:order-2"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              {/* Avatar Container */}
+              
               <motion.div
                 className="relative mx-auto w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96"
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               >
-                {/* Glow Effect */}
+                
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-2xl animate-pulse" />
 
-                {/* Avatar Image */}
+                
                 <div className="relative w-full h-full rounded-full p-1 bg-gradient-to-br from-blue-400 to-purple-600 shadow-2xl">
                   <div
                     className={`w-full h-full rounded-full overflow-hidden p-2 ${
@@ -471,7 +468,7 @@ export default function Hero() {
                   </div>
                 </div>
 
-                {/* Floating Icons */}
+                
                 <motion.div
                   className="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full flex items-center justify-center text-white shadow-lg"
                   animate={{ rotate: 360, scale: [1, 1.1, 1] }}
@@ -489,7 +486,7 @@ export default function Hero() {
                 </motion.div>
               </motion.div>
 
-              {/* Stats */}
+              
               <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-sm mx-auto">
                 <StatCard end={50} label="Projetos" />
                 <StatCard end={5} label="Anos" />
@@ -499,11 +496,11 @@ export default function Hero() {
           </div>
         </div>
       </motion.div>
-      {/* === Fim do bloco que usa y/opacity === */}
+      
 
-      {/* === Tech Stack (Skills) fica agora FORA do motion.div acima === */}
+      
       <section
-        className={`relative py-16 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 overflow-hidden`}
+        className={`relative py-16 px-4 ${stackBackground} overflow-hidden`}
       >
         <div className="max-w-7xl mx-auto text-center mb-12">
           <motion.h2
@@ -538,7 +535,7 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* Scroll Indicator */}
+      
       <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
         animate={{ y: [0, -8, 0] }}

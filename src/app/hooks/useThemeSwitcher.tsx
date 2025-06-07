@@ -1,4 +1,3 @@
-// src/app/hooks/useThemeSwitcher.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -13,7 +12,6 @@ import { useState, useEffect } from "react";
 export function useThemeSwitcher() {
   const [isDark, setIsDark] = useState(false);
 
-  // 1) só no primeiro mount: checa localStorage e/or media query
   useEffect(() => {
     try {
       const saved = localStorage.getItem("theme");
@@ -23,11 +21,9 @@ export function useThemeSwitcher() {
         setIsDark(true);
       }
     } catch {
-      // se localStorage der erro, ignora
     }
   }, []);
 
-  // 2) toda vez que isDark muda: aplica/remover classe e grava localStorage
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
     try {

@@ -88,7 +88,6 @@ export default function Header() {
     })
   };
 
-  // Não renderizar enquanto não estiver montado
   if (!mounted) {
     return (
       <nav className="fixed inset-x-0 top-0 z-50 backdrop-blur-md border-b border-white/10 dark:border-gray-800/20">
@@ -120,7 +119,7 @@ export default function Header() {
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          {/* Logo Enhanced */}
+          
           <motion.a
             href="#"
             className="flex items-center gap-3 group"
@@ -151,7 +150,7 @@ export default function Header() {
             </div>
           </motion.a>
 
-          {/* Desktop Menu Enhanced */}
+          
           <div className="hidden md:flex items-center gap-2">
             {links.map((link, i) => (
               <motion.a
@@ -174,7 +173,7 @@ export default function Header() {
                   {link.name}
                 </div>
                 
-                {/* Hover tooltip */}
+                
                 <motion.div
                   className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-lg opacity-0 pointer-events-none whitespace-nowrap"
                   initial={{ opacity: 0, y: 5 }}
@@ -185,7 +184,7 @@ export default function Header() {
                   <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-900 dark:bg-gray-700 rotate-45" />
                 </motion.div>
 
-                {/* Active indicator */}
+                
                 <motion.span 
                   className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 transform -translate-x-1/2 group-hover:w-full transition-all duration-300"
                   layoutId="activeTab"
@@ -193,7 +192,7 @@ export default function Header() {
               </motion.a>
             ))}
 
-            {/* Theme Toggle Enhanced */}
+            
             <motion.button
               onClick={toggle}
               className="ml-4 p-3 rounded-xl bg-white/20 dark:bg-gray-800/20 hover:bg-white/30 dark:hover:bg-gray-700/30 border border-white/30 dark:border-gray-700/30 backdrop-blur-sm transition-all duration-300 group"
@@ -232,12 +231,12 @@ export default function Header() {
                 )}
               </AnimatePresence>
 
-              {/* Glow effect */}
+              
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm -z-10" />
             </motion.button>
           </div>
 
-          {/* Mobile Hamburger Enhanced */}
+          
           <motion.button
             className="md:hidden p-3 rounded-xl bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/30"
             onClick={() => setMenu(!menu)}
@@ -273,7 +272,7 @@ export default function Header() {
           </motion.button>
         </div>
 
-        {/* Mobile Menu Enhanced */}
+        
         <AnimatePresence>
           {menu && (
             <motion.div
@@ -336,7 +335,7 @@ export default function Header() {
         </AnimatePresence>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
+      
       <AnimatePresence>
         {menu && (
           <motion.div

@@ -1,4 +1,3 @@
-// src/app/components/FeaturedProjects.tsx
 
 "use client";
 
@@ -79,10 +78,10 @@ export default function FeaturedProjects() {
       id="projects"
       className="relative py-24 px-4 bg-gradient-to-b from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 overflow-hidden"
     >
-      {/* Elementos flutuantes de fundo (após montagem) */}
+      
       <FloatingShapes palette="mixed" z={0} />
 
-      {/* Cabeçalho */}
+      
       <div className="max-w-7xl mx-auto text-center mb-16 relative z-10">
         <motion.h2
           className="text-3xl sm:text-4xl font-bold mb-3 bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent tracking-wide"
@@ -105,7 +104,7 @@ export default function FeaturedProjects() {
         </motion.p>
       </div>
 
-      {/* Conteúdo principal */}
+      
       <div className="relative max-w-5xl mx-auto z-10">
         <AnimatePresence mode="wait">
           <motion.div
@@ -117,7 +116,7 @@ export default function FeaturedProjects() {
             transition={{ duration: 0.5 }}
           >
             <div className="md:flex">
-              {/* Imagem do projeto */}
+              
               <div className="md:w-1/2 relative group overflow-hidden">
                 <Image
                   src={projects[current].img}
@@ -126,7 +125,7 @@ export default function FeaturedProjects() {
                   height={450}
                   className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                {/* Overlay no hover */}
+                
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
                   <a
                     href={projects[current].link}
@@ -137,7 +136,7 @@ export default function FeaturedProjects() {
                 </div>
               </div>
 
-              {/* Conteúdo textual */}
+              
               <div className="md:w-1/2 p-8 flex flex-col">
                 <h3 className="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
                   {projects[current].name}
@@ -194,7 +193,7 @@ export default function FeaturedProjects() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Botões de navegação */}
+        
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -214,7 +213,7 @@ export default function FeaturedProjects() {
           <FiChevronRight />
         </motion.button>
 
-        {/* Indicadores de páginação */}
+        
         <div className="flex justify-center mt-8 gap-2">
           {projects.map((_, idx) => (
             <button
