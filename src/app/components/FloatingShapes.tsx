@@ -79,7 +79,10 @@ export function FloatingShapes({
   if (!isMounted) return null;
 
   return (
-    <div className={`absolute inset-0 overflow-hidden pointer-events-none z-${z}`}>
+    <div
+      className="absolute inset-0 overflow-hidden pointer-events-none"
+      style={{ zIndex: z }}
+    >
       {shapes.map((s) => (
         <motion.div
           key={s.key}
