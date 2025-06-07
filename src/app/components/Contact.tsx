@@ -14,9 +14,10 @@ export default function Contact() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm<{ name: string; email: string; message: string }>();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: { name: string; email: string; message: string }) => {
+    console.log(data);
     alert("🎉 Mensagem enviada!");
     reset();
   };

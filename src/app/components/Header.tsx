@@ -107,8 +107,8 @@ export default function Header() {
     <>
       <motion.nav 
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          scrolled 
-            ? 'backdrop-blur-xl shadow-lg border-b border-white/20 dark:border-gray-700/30' 
+          scrolled
+            ? 'backdrop-blur-xl shadow-md border-b border-gray-200 dark:border-gray-700'
             : 'backdrop-blur-md border-b border-white/10 dark:border-gray-800/20'
         }`}
         style={{

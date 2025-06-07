@@ -222,7 +222,7 @@ export default function FeaturedProjects() {
               className={`w-3 h-3 rounded-full transition-all ${
                 current === idx
                   ? "bg-blue-500 w-6"
-                  : "bg-gray-300 hover:bg-gray-400"
+                  : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
               }`}
               aria-label={`Ir para projeto ${idx + 1}`}
             />
