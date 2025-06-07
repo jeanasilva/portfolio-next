@@ -27,7 +27,7 @@ const FloatingParticles = () => {
 
   useEffect(() => {
     if (!mounted) return;
-    
+
     function update() {
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
     }
@@ -53,7 +53,7 @@ const FloatingParticles = () => {
   }, [dimensions, mounted]);
 
   if (!mounted) return null;
-  
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
       {particles.map((p) => (
@@ -123,7 +123,7 @@ const TypingEffect = ({ text }: { text: string }) => (
   </div>
 );
 
-// Card de tecnologia com ícones corrigidos
+// Card de tecnologia com ícones
 const TechCard = ({
   icon,
   name,
@@ -142,15 +142,14 @@ const TechCard = ({
       className="tilt-card group"
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ 
-        delay: index * 0.1, 
+      transition={{
+        delay: index * 0.1,
         duration: 0.5,
-        ease: "easeOut"
+        ease: "easeOut",
       }}
       whileHover={{ y: -8, scale: 1.05 }}
     >
       <div className="relative p-4 sm:p-6 rounded-2xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-300">
-        {/* Content */}
         <div className="relative z-10 flex flex-col items-center gap-3">
           <div className="text-3xl sm:text-4xl text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300">
             {icon}
@@ -212,13 +211,13 @@ export default function Hero() {
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const roles = [
     "Full-Stack Developer",
-    "Backend Engineer", 
+    "Backend Engineer",
     "Frontend Specialist",
     "DevOps Expert",
     "AI/ML Enthusiast",
@@ -250,7 +249,7 @@ export default function Hero() {
 
   useEffect(() => {
     if (!mounted) return;
-    
+
     document.querySelectorAll<HTMLElement>(".tilt-card").forEach((el) => {
       VanillaTilt.init(el, {
         max: 10,
@@ -289,8 +288,8 @@ export default function Hero() {
   }
 
   // Determinar classes de fundo baseado no tema atual
-  const backgroundClasses = isDark 
-    ? "bg-gradient-to-br from-gray-900 via-gray-800 to-indigo-900" 
+  const backgroundClasses = isDark
+    ? "bg-gradient-to-br from-gray-900 via-gray-800 to-indigo-900"
     : "bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100";
 
   return (
@@ -301,17 +300,12 @@ export default function Hero() {
       {/* Background Elements */}
       <BackgroundGrid />
       <FloatingParticles />
-      
-      <motion.div 
-        className="relative z-10"
-        style={{ y, opacity }}
-      >
-        {/* Main Content - Ajustado o padding-top para não colar no header */}
+
+      {/* === Aqui fechamos o motion.div logo após os conteúdos que queremos “fadar” === */}
+      <motion.div className="relative z-10" style={{ y, opacity }}>
+        {/* Main Content */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
-          
-          {/* Hero Section */}
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-20">
-            
             {/* Left Content */}
             <motion.div
               className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1"
@@ -322,8 +316,8 @@ export default function Hero() {
               {/* Greeting Badge */}
               <motion.div
                 className={`inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm border ${
-                  isDark 
-                    ? "bg-gray-800/30 border-gray-700/50 text-gray-300" 
+                  isDark
+                    ? "bg-gray-800/30 border-gray-700/50 text-gray-300"
                     : "bg-white/30 border-white/50 text-gray-700"
                 }`}
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -331,9 +325,7 @@ export default function Hero() {
                 transition={{ delay: 0.2 }}
               >
                 <span className="text-xl">👋</span>
-                <span className="text-sm font-medium">
-                  Olá, eu sou
-                </span>
+                <span className="text-sm font-medium">Olá, eu sou</span>
               </motion.div>
 
               {/* Name */}
@@ -343,19 +335,21 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
               >
-                <span className={`bg-gradient-to-r ${
-                  isDark 
-                    ? "from-blue-400 via-purple-400 to-indigo-400" 
-                    : "from-blue-600 via-purple-600 to-indigo-600"
-                } bg-clip-text text-transparent`}>
+                <span
+                  className={`bg-gradient-to-r ${
+                    isDark
+                      ? "from-blue-400 via-purple-400 to-indigo-400"
+                      : "from-blue-600 via-purple-600 to-indigo-600"
+                  } bg-clip-text text-transparent`}
+                >
                   Jean A.
                 </span>
                 <br />
-                <span className={`bg-gradient-to-r ${
-                  isDark 
-                    ? "from-indigo-400 to-blue-400" 
-                    : "from-indigo-600 to-blue-600"
-                } bg-clip-text text-transparent`}>
+                <span
+                  className={`bg-gradient-to-r ${
+                    isDark ? "from-indigo-400 to-blue-400" : "from-indigo-600 to-blue-600"
+                  } bg-clip-text text-transparent`}
+                >
                   Silva
                 </span>
               </motion.h1>
@@ -367,14 +361,16 @@ export default function Hero() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
-                <div className={`flex items-center gap-3 px-4 sm:px-6 py-3 rounded-xl backdrop-blur-sm border ${
-                  isDark 
-                    ? "bg-gray-800/40 border-gray-700/50" 
-                    : "bg-white/40 border-white/50"
-                }`}>
-                  <FiCode className={`text-lg sm:text-xl flex-shrink-0 ${
-                    isDark ? "text-blue-400" : "text-blue-500"
-                  }`} />
+                <div
+                  className={`flex items-center gap-3 px-4 sm:px-6 py-3 rounded-xl backdrop-blur-sm border ${
+                    isDark ? "bg-gray-800/40 border-gray-700/50" : "bg-white/40 border-white/50"
+                  }`}
+                >
+                  <FiCode
+                    className={`text-lg sm:text-xl flex-shrink-0 ${
+                      isDark ? "text-blue-400" : "text-blue-500"
+                    }`}
+                  />
                   <TypingEffect text={displayedText} />
                 </div>
               </motion.div>
@@ -389,11 +385,11 @@ export default function Hero() {
                 transition={{ delay: 0.6 }}
               >
                 Desenvolvedor Full-Stack especializado em criar{" "}
-                <span className={`font-semibold bg-gradient-to-r ${
-                  isDark 
-                    ? "from-blue-400 to-purple-400" 
-                    : "from-blue-600 to-purple-600"
-                } bg-clip-text text-transparent`}>
+                <span
+                  className={`font-semibold bg-gradient-to-r ${
+                    isDark ? "from-blue-400 to-purple-400" : "from-blue-600 to-purple-600"
+                  } bg-clip-text text-transparent`}
+                >
                   soluções digitais inovadoras
                 </span>{" "}
                 com tecnologias modernas e integração de IA.
@@ -413,8 +409,7 @@ export default function Hero() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <span className="relative z-10 flex items-center gap-2">
-                    <FiZap className="text-lg" />
-                    Ver Projetos
+                    <FiZap className="text-lg" /> Ver Projetos
                     <FiExternalLink className="text-sm opacity-70 group-hover:opacity-100 transition-opacity" />
                   </span>
                   <motion.div
@@ -428,8 +423,8 @@ export default function Hero() {
                 <motion.a
                   href="#contact"
                   className={`px-6 sm:px-8 py-3 sm:py-4 border-2 rounded-xl font-semibold flex items-center justify-center gap-2 backdrop-blur-sm transition-all duration-300 ${
-                    isDark 
-                      ? "border-blue-400/50 text-blue-400 bg-gray-800/20 hover:bg-gray-700/30" 
+                    isDark
+                      ? "border-blue-400/50 text-blue-400 bg-gray-800/20 hover:bg-gray-700/30"
                       : "border-blue-500/50 text-blue-600 bg-white/20 hover:bg-white/30"
                   }`}
                   whileHover={{ scale: 1.05, y: -2 }}
@@ -441,7 +436,7 @@ export default function Hero() {
               </motion.div>
             </motion.div>
 
-            {/* Right Content - Avatar */}
+            {/* Right Content – Avatar e Stats */}
             <motion.div
               className="space-y-6 order-1 lg:order-2"
               initial={{ opacity: 0, x: 50 }}
@@ -456,12 +451,14 @@ export default function Hero() {
               >
                 {/* Glow Effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-2xl animate-pulse" />
-                
+
                 {/* Avatar Image */}
                 <div className="relative w-full h-full rounded-full p-1 bg-gradient-to-br from-blue-400 to-purple-600 shadow-2xl">
-                  <div className={`w-full h-full rounded-full overflow-hidden p-2 ${
-                    isDark ? "bg-gray-800" : "bg-white"
-                  }`}>
+                  <div
+                    className={`w-full h-full rounded-full overflow-hidden p-2 ${
+                      isDark ? "bg-gray-800" : "bg-white"
+                    }`}
+                  >
                     <div className="relative w-full h-full">
                       <Image
                         src="/foto_logo.jpg"
@@ -500,63 +497,67 @@ export default function Hero() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </motion.div>
+      {/* === Fim do bloco que usa y/opacity === */}
 
-          {/* Tech Stack Section */}
-          <motion.div
-            className="space-y-8"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
+      {/* === Tech Stack (Skills) fica agora FORA do motion.div acima === */}
+      <section
+        className={`relative py-16 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 overflow-hidden`}
+      >
+        <div className="max-w-7xl mx-auto text-center mb-12">
+          <motion.h2
+            className={`text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r ${
+              isDark ? "from-gray-200 to-gray-400" : "from-gray-800 to-gray-600"
+            } bg-clip-text text-transparent tracking-wide`}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true, margin: "-100px" }}
           >
-            {/* Section Header */}
-            <div className="text-center space-y-4">
-              <h2 className={`text-2xl sm:text-3xl font-bold bg-gradient-to-r ${
-                isDark 
-                  ? "from-gray-200 to-gray-400" 
-                  : "from-gray-800 to-gray-600"
-              } bg-clip-text text-transparent`}>
-                Stack de Tecnologias
-              </h2>
-              <p className={`text-sm sm:text-base max-w-2xl mx-auto ${
-                isDark ? "text-gray-400" : "text-gray-600"
-              }`}>
-                Ferramentas e tecnologias que domino para criar soluções robustas e escaláveis
-              </p>
-            </div>
-
-            {/* Tech Grid */}
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-6 max-w-4xl mx-auto">
-              {techStack.map((tech, index) => (
-                <TechCard
-                  key={tech.name}
-                  icon={tech.icon}
-                  name={tech.name}
-                  index={index}
-                />
-              ))}
-            </div>
-          </motion.div>
+            Stack de Tecnologias
+          </motion.h2>
+          <motion.p
+            className={`text-base sm:text-lg ${
+              isDark ? "text-gray-400" : "text-gray-600"
+            } max-w-2xl mx-auto leading-relaxed`}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.08 }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            Ferramentas e tecnologias que domino para criar soluções robustas e
+            escaláveis.
+          </motion.p>
         </div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <div className={`flex flex-col items-center gap-2 ${
+        <div className="max-w-7xl mx-auto grid gap-8 md:grid-cols-3 relative z-10">
+          {techStack.map((tech, index) => (
+            <TechCard key={tech.name} icon={tech.icon} name={tech.name} index={index} />
+          ))}
+        </div>
+      </section>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+        animate={{ y: [0, -8, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <div
+          className={`flex flex-col items-center gap-2 ${
             isDark ? "text-gray-400" : "text-gray-500"
-          }`}>
-            <span className="text-xs font-medium">Scroll</span>
-            <div className="w-5 h-8 border-2 border-current rounded-full flex justify-center">
-              <motion.div
-                className="w-1 h-2 bg-current rounded-full mt-1"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              />
-            </div>
+          }`}
+        >
+          <span className="text-xs font-medium">Scroll</span>
+          <div className="w-5 h-8 border-2 border-current rounded-full flex justify-center">
+            <motion.div
+              className="w-1 h-2 bg-current rounded-full mt-1"
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
           </div>
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );
