@@ -251,7 +251,7 @@ export default function Skills() {
       </div>
 
       <div className="max-w-7xl mx-auto grid gap-10 md:grid-cols-3 relative z-10">
-        {skills.map((s, i) => (
+        {skills.map((s) => (
           <SkillCard
             key={s.title}
             title={s.title}

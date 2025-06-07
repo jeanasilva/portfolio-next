@@ -6,7 +6,7 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="py-12 px-4 bg-white dark:bg-gray-900 text-center border-t border-gray-100 dark:border-gray-800">
+    <footer className="py-12 px-4 bg-gradient-to-b from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-center border-t border-gray-100 dark:border-gray-800">
       <div className="max-w-7xl mx-auto">
         <motion.a
           href="#"
