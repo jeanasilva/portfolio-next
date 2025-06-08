@@ -35,6 +35,10 @@ module.exports = {
           600: "#4f46e5",
           900: "#312e81",
         },
+        accent: {
+          DEFAULT: "var(--color-accent)",
+          dark: "var(--color-accent-dark)",
+        },
         slate: {
           50: "#f8fafc",
         },
