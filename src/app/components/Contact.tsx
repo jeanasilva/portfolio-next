@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import { FloatingShapes } from "./FloatingShapes"; // ajuste o caminho conforme sua estrutura
+import { useThemeContext } from "../contexts/ThemeContext";
 
 export default function Contact() {
   const {
@@ -22,10 +23,17 @@ export default function Contact() {
     reset();
   };
 
+  const { isDark, mounted } = useThemeContext();
+  const background = isDark
+    ? "from-gray-900 via-gray-800 to-gray-700"
+    : "from-blue-50 via-indigo-50 to-purple-50";
+
+  if (!mounted) return null;
+
   return (
     <section
       id="contact"
-      className="relative py-24 px-4 bg-gradient-to-b from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 overflow-hidden"
+      className={`relative py-24 px-4 bg-gradient-to-b ${background} overflow-hidden`}
     >
       
       <FloatingShapes palette="mixed" z={0} />
