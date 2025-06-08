@@ -1,14 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
-/**
- * Hook único para todo o app:  
- *  - Lê `localStorage.getItem("theme")` no primeiro mount.  
- *  - Se estiver “dark”, aplica a classe `dark` em <html> e retorna isDark = true.  
- *  - Caso contrário, checa `prefers-color-scheme` (e aplica `dark` se for “dark”).  
- *  - Sempre que `isDark` muda, atualiza (add/remove) a classe `dark` em <html> e grava em localStorage.
- */
 export function useThemeSwitcher() {
   const [isDark, setIsDark] = useState(false);
 

@@ -7,7 +7,7 @@ import VanillaTilt from "vanilla-tilt";
 import { FaCode, FaServer, FaCloud } from "react-icons/fa";
 import { useThemeContext } from "../contexts/ThemeContext";
 
-const BackgroundGrid = () => (
+const BackgroundGrid = ({ dark }: { dark: boolean }) => (
   <div className="absolute inset-0 opacity-10">
     <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -17,7 +17,7 @@ const BackgroundGrid = () => (
             fill="none"
             stroke="currentColor"
             strokeWidth="1"
-            className="text-indigo-400"
+            className={dark ? "text-indigo-800" : "text-indigo-400"}
           />
         </pattern>
       </defs>
@@ -226,12 +226,12 @@ export default function Skills() {
       className={`relative py-24 px-4 overflow-hidden transition-all duration-500 ${backgroundClasses}`}
     >
       
-      <BackgroundGrid />
+      <BackgroundGrid dark={isDark} />
       <FloatingElements />
 
       <div className="max-w-7xl mx-auto text-center mb-16 relative z-10">
         <motion.h2
-          className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent tracking-wide"
+          className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-accent dark:from-accent-dark to-purple-600 bg-clip-text text-transparent tracking-wide"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}

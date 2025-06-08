@@ -10,7 +10,7 @@ import {
   FiChevronRight,
   FiExternalLink,
 } from "react-icons/fi";
-import { FloatingShapes } from "./FloatingShapes"; // ajuste o caminho conforme sua estrutura
+import { FloatingShapes } from "./FloatingShapes";
 
 const projects = [
   {

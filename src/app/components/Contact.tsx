@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
-import { FloatingShapes } from "./FloatingShapes"; // ajuste o caminho conforme sua estrutura
+import { FloatingShapes } from "./FloatingShapes";
 import { useThemeContext } from "../contexts/ThemeContext";
 
 export default function Contact() {
