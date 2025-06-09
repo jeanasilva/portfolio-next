@@ -1,4 +1,3 @@
-/* src/app/globals.css */
 @import "tailwindcss";
 
 :root {
@@ -13,7 +12,6 @@
   --color-accent-dark: #3b82f6;
 }
 
-/* Transições globais suaves */
 *,
 *::before,
 *::after {
@@ -36,27 +34,23 @@ body {
   color: var(--color-light);
 }
 
-/* Garantir transições suaves para seções com gradientes */
 section {
   transition: background 400ms ease, color 400ms ease;
 }
 
-/* Hero background transitions */
 .bg-gradient-to-br {
   transition: all 400ms ease;
 }
 
-/* Garantir que inputs e textareas herdem a cor correta */
 input, textarea, select {
   color: inherit;
   background-color: inherit;
   transition: all 300ms ease;
 }
 
-/* Transições para elementos de tema específicos */
-.bg-white, 
+.bg-white,
 .dark\:bg-gray-900,
-.text-gray-900, 
+.text-gray-900,
 .dark\:text-white,
 .backdrop-blur-sm,
 .backdrop-blur-md,
@@ -64,14 +58,12 @@ input, textarea, select {
   transition: all 400ms ease;
 }
 
-/* Suavizar bordas e sombras */
 .border,
 .shadow-lg,
 .shadow-xl {
   transition: all 300ms ease;
 }
 
-/* Garantir que as cores de texto mudem suavemente */
 .text-gray-600,
 .text-gray-700,
 .text-gray-800,
@@ -81,7 +73,6 @@ input, textarea, select {
   transition: color 400ms ease;
 }
 
-/* Garantir que gradientes de fundo respondam ao tema */
 .from-slate-50,
 .via-blue-50,
 .to-indigo-100,
@@ -91,12 +82,17 @@ input, textarea, select {
   transition: all 400ms ease;
 }
 
-/* Evitar flash inicial */
 html.loading * {
   transition: none !important;
 }
 
-/* Suavizar animações do VanillaTilt */
 .tilt-card {
   transform-style: preserve-3d;
+}
+
+body:not(.dark) .text-gray-500,
+body:not(.dark) .text-gray-600,
+body:not(.dark) .text-gray-700,
+body:not(.dark) .text-gray-800 {
+  color: var(--color-dark) !important;
 }
