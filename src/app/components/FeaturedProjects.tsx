@@ -10,7 +10,8 @@ import {
   FiChevronRight,
   FiExternalLink,
 } from "react-icons/fi";
-import { FloatingShapes } from "./FloatingShapes"; // ajuste o caminho conforme sua estrutura
+import { FloatingShapes } from "./FloatingShapes";
+import { useThemeContext } from "../contexts/ThemeContext";
 
 const projects = [
   {
@@ -56,6 +57,11 @@ const projects = [
 
 export default function FeaturedProjects() {
   const [current, setCurrent] = useState(0);
+  const { isDark, mounted } = useThemeContext();
+
+  const background = isDark
+    ? "from-gray-900 via-gray-800 to-gray-700"
+    : "from-blue-50 via-indigo-50 to-purple-50";
 
   const prev = () =>
     setCurrent((i) => (i - 1 + projects.length) % projects.length);
@@ -73,10 +79,12 @@ export default function FeaturedProjects() {
     });
   }, [current]);
 
+  if (!mounted) return null;
+
   return (
     <section
       id="projects"
-      className="relative py-24 px-4 bg-gradient-to-b from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 overflow-hidden"
+      className={`relative py-24 px-4 bg-gradient-to-b ${background} overflow-hidden`}
     >
       
       <FloatingShapes palette="mixed" z={0} />
@@ -84,7 +92,7 @@ export default function FeaturedProjects() {
       
       <div className="max-w-7xl mx-auto text-center mb-16 relative z-10">
         <motion.h2
-          className="text-3xl sm:text-4xl font-bold mb-3 bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent tracking-wide"
+          className="text-3xl sm:text-4xl font-bold mb-3 bg-gradient-to-r from-accent dark:from-accent-dark to-purple-600 bg-clip-text text-transparent tracking-wide"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}

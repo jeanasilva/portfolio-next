@@ -10,14 +10,14 @@ type Palette =
   | "purple"
   | "teal"
   | "pink"
-  | "mixed"; // “mixed” → usa todas
+  | "mixed";
 
 interface Props {
-  amount?: number;     // quantos blobs
-  size?: [number, number]; // [min, max] em px
-  blur?: number;       // default 24
+  amount?: number;
+  size?: [number, number];
+  blur?: number;
   palette?: Palette;
-  z?: number;          // z-index, default 0
+  z?: number;
 }
 
 const lightPalettes: Record<Palette, string[]> = {
